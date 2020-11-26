@@ -5,7 +5,7 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Войти</v-toolbar-title>
+                <v-toolbar-title>Регистрация</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
                 <v-form>
@@ -22,7 +22,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click.prevent="signUp">Войти</v-btn>
+                <v-btn color="primary" @click.prevent="signUp">Зарегистрировать</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
