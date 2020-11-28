@@ -49,7 +49,7 @@
 export default {
   name: 'Home',
   components: {
-    // HelloWorld,
+    // Header,
   },
   data() {
     return {
