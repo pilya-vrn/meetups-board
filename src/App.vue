@@ -1,19 +1,24 @@
 <template>
   <div id="app">
-      <router-view/>
-    <Footer></Footer>
+    <v-app>
+      <Header></Header>
+      <v-main>
+        <router-view/>
+      </v-main>
+      <Footer></Footer>
+    </v-app>
   </div>
 </template>
 
 <script>
-// import MainPage from '@/components/MainPage.vue';
+import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 
 export default {
   name: 'App',
   components: {
+    Header,
     Footer,
-    // MainPage,
   },
   data: () => ({
     //

@@ -1,16 +1,14 @@
 <template>
-  <v-app>
-    <v-toolbar app dark class="primary">
+    <v-app-bar app dark class="primary">
       <v-toolbar-title v-text="'Доска митапов'"></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn flat v-for="(item, i) in menyBtns" v-bind:key="i" v-bind:to="item.route">
+        <v-btn link text v-for="(item, i) in menyBtns" v-bind:key="i" v-bind:to="item.route">
           <v-icon left v-html="item.icon"></v-icon>
           {{item.title}}
         </v-btn>
       </v-toolbar-items>
-    </v-toolbar>
-  </v-app>
+    </v-app-bar>
 </template>
 
 <script>
