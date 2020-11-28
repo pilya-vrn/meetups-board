@@ -1,48 +1,22 @@
 <template>
-  <v-app id="inspire">
-    <v-carousel
-      cycle
-      height="700"
-      hide-delimiter-background
-      show-arrows-on-hover>
-      <v-carousel-item
-        v-for="(item,i) in items"
-        v-bind:key="i"
-        v-bind:title="item.title"
-        position="center"
-        >
-          <v-img :src="item.src" max-height="700" max-width="1300" position="center">
-            <v-sheet outlined tile width="700">
-          <v-row
-              class="fill-height"
-              align-content="center"
-              justify="center"
-            >
-              <div class="display-3">
-                {{ item.title }}
+  <div style="max-width: 1000px; margin: 0 auto;">
+    <v-carousel cycle show-arrows-on-hover>
+      <v-carousel-item v-for="(item, i) in items"
+                       :key="i"
+                       :title="item.title"
+                       :src="item.src">
+        <v-sheet height="100%" tile color="transparent">
+          <v-row class="fill-height" align="end" justify="center">
+              <div class="display-3" style="padding-bottom: 50px;">
+                <div style="background: rgba(0,0,0,.3); padding: 5px;">
+                  {{ item.title }}
+                </div>
               </div>
           </v-row>
-          </v-sheet>
-          </v-img>
-        <!-- v-bind:src="item.src" -->
-
+        </v-sheet>
       </v-carousel-item>
     </v-carousel>
-  </v-app>
-  <!-- <v-sheet
-          v-bind:color="colors[i]"
-          height="100%"
-        >
-          <v-row
-            class="fill-height"
-            align="center"
-            justify="center"
-          >
-            <div class="display-3">
-              {{ slide }} Slide
-            </div>
-          </v-row>
-        </v-sheet> -->
+  </div>
 </template>
 
 <script>
