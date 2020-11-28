@@ -1,9 +1,7 @@
 <template>
-  <v-app>
     <v-footer v-bind:fixed="true" app>
       <span>Made by ilsaw</span>
     </v-footer>
-  </v-app>
 
 </template>
 

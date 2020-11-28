@@ -10,7 +10,7 @@
         v-bind:key="i"
         v-bind:title="item.title"
         >
-          <v-img :src="item.src" max-height="700">
+          <v-img :src="item.src" max-height="700" max-width="1300">
             <v-sheet>
           <v-row
               class="fill-height"
@@ -67,7 +67,7 @@ export default {
         {
           // eslint-disable-next-line global-require
           src: require('../assets/20122011131923.jpg'),
-          title: 'Встреча в донецке',
+          title: 'Встреча в Донецке',
         },
         {
           // eslint-disable-next-line global-require
