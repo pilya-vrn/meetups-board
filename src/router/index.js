@@ -26,7 +26,7 @@ const routes = [
     component: SignIn,
   },
   {
-    path: '/organizemeetup',
+    path: '/createmeetups',
     name: 'OrganizeMeetup',
     component: OrganizeMeetup,
   },

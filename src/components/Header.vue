@@ -1,6 +1,8 @@
 <template>
     <v-app-bar app dark class="primary">
+      <router-link to="/" tag="span" style="cursor:pointer">
       <v-toolbar-title v-text="'Доска митапов'"></v-toolbar-title>
+      </router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn link text v-for="(item, i) in menyBtns" v-bind:key="i" v-bind:to="item.route">
@@ -25,7 +27,7 @@ export default {
         {
           icon: 'location_on',
           title: 'создать встречу',
-          route: '/organizemeetup',
+          route: '/createmeetups',
         },
         {
           icon: 'person',

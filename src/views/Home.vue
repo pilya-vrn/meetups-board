@@ -9,9 +9,10 @@
         v-for="(item,i) in items"
         v-bind:key="i"
         v-bind:title="item.title"
+        position="center"
         >
-          <v-img :src="item.src" max-height="700" max-width="1300">
-            <v-sheet>
+          <v-img :src="item.src" max-height="700" max-width="1300" position="center">
+            <v-sheet outlined tile width="700">
           <v-row
               class="fill-height"
               align-content="center"
