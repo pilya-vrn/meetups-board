@@ -1,5 +1,18 @@
 <template>
   <div class="wrapper">
+    <div class="btn-wrapper">
+      <v-btn
+        to="/meetups"
+        depressed
+        color="primary"
+        style="margin-right: 25px;"
+        large>просмотр встреч</v-btn>
+      <v-btn
+        to="/createmeetups"
+        depressed
+        color="primary"
+        large>создать встречу</v-btn>
+  </div>
     <v-carousel cycle show-arrows-on-hover>
       <v-carousel-item v-for="(item, i) in items"
                        :key="i"
@@ -63,5 +76,12 @@ export default {
 .slide-title {
   background: rgba(0,0,0,.3);
   padding: 5px;
+}
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 25px;
+  padding-bottom: 15px;
 }
 </style>
