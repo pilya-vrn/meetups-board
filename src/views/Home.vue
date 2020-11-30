@@ -36,9 +36,6 @@
 
 export default {
   name: 'Home',
-  components: {
-    // Header,
-  },
   data() {
     return {
       items: [
