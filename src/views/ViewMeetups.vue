@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    хоум
+  <div>
+    View Meetups
   </div>
 </template>
 
@@ -10,9 +10,8 @@
 // import Header from '@/components/Header.vue';
 
 export default {
-  name: 'Home',
+  name: 'ViewMeetups',
   components: {
-    // Header,
   },
 };
 </script>
