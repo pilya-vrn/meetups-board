@@ -6,7 +6,7 @@ import SignUp from '../views/user/SignUp.vue';
 import OrganizeMeetup from '../views/OrganizeMeetup.vue';
 import Profile from '../views/Profile.vue';
 import ViewMeetups from '../views/ViewMeetups.vue';
-// import authGuard from './auth-guard';
+// import authGuard from './authGuard';
 
 Vue.use(VueRouter);
 

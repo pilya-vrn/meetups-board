@@ -8,7 +8,8 @@
         <v-btn link text v-for="(item, i) in menyBtns" v-bind:key="i" v-bind:to="item.route">
           <v-icon left v-html="item.icon"></v-icon>
           {{item.title}}
-        </v-btn> <v-btn link text v-if="user" @click="logUserOut">
+        </v-btn>
+         <v-btn link text v-if="user" @click="logUserOut">
           <v-icon>exit_to_app</v-icon>выйти</v-btn>
       </v-toolbar-items>
     </v-app-bar>

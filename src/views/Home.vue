@@ -11,7 +11,8 @@
         to="/createmeetups"
         depressed
         color="primary"
-        large>создать встречу</v-btn>
+        large
+        v-if="user">создать встречу</v-btn>
   </div>
     <v-carousel cycle show-arrows-on-hover>
       <v-carousel-item v-for="(item, i) in items"
@@ -62,6 +63,11 @@ export default {
       ],
 
     };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
   },
 };
 </script>
