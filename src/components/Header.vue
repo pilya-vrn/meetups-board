@@ -10,7 +10,11 @@
           {{item.title}}
         </v-btn>
          <v-btn link text v-if="user" @click="logUserOut">
-          <v-icon>exit_to_app</v-icon>выйти</v-btn>
+          <v-icon>exit_to_app
+          </v-icon>выйти
+          <router-link to="/">
+          </router-link>
+          </v-btn>
       </v-toolbar-items>
     </v-app-bar>
 </template>
