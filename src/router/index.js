@@ -6,6 +6,7 @@ import SignUp from '../views/user/SignUp.vue';
 import OrganizeMeetup from '../views/OrganizeMeetup.vue';
 import Profile from '../views/Profile.vue';
 import ViewMeetups from '../views/ViewMeetups.vue';
+// import authGuard from './auth-guard';
 
 Vue.use(VueRouter);
 
@@ -14,6 +15,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    // beforeEnter: authGuard,
   },
   {
     path: '/signup',
@@ -44,6 +46,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
+  // base: process.env.BASE_URL,
   routes,
 });
 

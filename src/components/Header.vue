@@ -8,7 +8,8 @@
         <v-btn link text v-for="(item, i) in menyBtns" v-bind:key="i" v-bind:to="item.route">
           <v-icon left v-html="item.icon"></v-icon>
           {{item.title}}
-        </v-btn>
+        </v-btn> <v-btn link text v-if="user" @click="logUserOut">
+          <v-icon>exit_to_app</v-icon>выйти</v-btn>
       </v-toolbar-items>
     </v-app-bar>
 </template>
@@ -17,8 +18,12 @@
 export default {
   name: 'Header',
   computed: {
+    user() {
+      return this.$store.state.user;
+    },
     menyBtns() {
-      return [
+      return this.user ?
+      [
         {
           icon: 'supervisor_account',
           title: 'просмотр встреч',
@@ -34,6 +39,12 @@ export default {
           title: 'профиль',
           route: '/profile',
         },
+      ] : [
+        {
+          icon: 'supervisor_account',
+          title: 'просмотр встреч',
+          route: '/meetups',
+        },
         {
           icon: 'tag_faces',
           title: 'Зарегистрироваться',
@@ -43,10 +54,13 @@ export default {
           icon: 'enhanced_encryption',
           title: 'войти',
           route: '/signin',
-        },
-      ];
+        },];
     },
   },
-
+  methods: {
+  logUserOut() {
+      this.$store.dispatch('logUserOut');
+    },
+  },
 };
 </script>
