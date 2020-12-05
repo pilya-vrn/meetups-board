@@ -18,14 +18,14 @@
           elevation="15"
           locale="ru"
           v-bind:first-day-of-week="1"></v-date-picker>
-          {{ date }}
+          <!-- {{ date }} -->
         <v-time-picker
           v-model="time"
           class="mt-4"
           format="24hr"
           elevation="15"
           ></v-time-picker>
-          {{ time }}
+          <!-- {{ time }} -->
       </div>
       <v-btn color="primary" width="200" @click.prevent="createMeetup">Создать встречу</v-btn>
     </v-row>
@@ -64,9 +64,18 @@ export default {
         // eslint-disable-next-line no-alert
         alert('Заполните все  поля!');
       } else {
-        // eslint-disable-next-line no-alert
-        alert('название: ' + this.title + '  ' + 'место: ' +
-        this.location + '  ' + 'описание: ' + this.description);
+        // // eslint-disable-next-line no-alert
+        // alert('название: ' + this.title + '  ' + 'место: ' +
+        // this.location + '  ' + 'описание: ' + this.description);
+        this.$store.dispatch('createMeetup',
+          {
+            title: this.title,
+            location: this.location,
+            photo: '',
+            description: this.description,
+            date: this.date,
+            time: this.time,
+          });
       }
     },
   },
