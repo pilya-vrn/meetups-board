@@ -9,12 +9,10 @@
           <v-icon left v-html="item.icon"></v-icon>
           {{item.title}}
         </v-btn>
-         <v-btn link text v-if="user" @click="logUserOut">
+        <v-btn link text v-if="user" @click="logUserOut">
           <v-icon>exit_to_app
           </v-icon>выйти
-          <router-link to="/">
-          </router-link>
-          </v-btn>
+        </v-btn>
       </v-toolbar-items>
     </v-app-bar>
 </template>
@@ -65,6 +63,7 @@ export default {
   methods: {
   logUserOut() {
       this.$store.dispatch('logUserOut');
+      this.$router.push('/');
     },
   },
 };

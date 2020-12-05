@@ -36,7 +36,7 @@ export default new Vuex.Store({
     //                photo:
     //                description:
     //                date:
-    //                time:
+    //                createdBy:
     //              }
     // }
   },
