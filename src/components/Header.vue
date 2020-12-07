@@ -25,13 +25,13 @@ export default {
       return this.$store.state.user;
     },
     menyBtns() {
-      return this.user ?
-      [
+      let btnsArray = [
         {
           icon: 'supervisor_account',
           title: 'просмотр встреч',
           route: '/meetups',
-        },
+        },];
+      const btnsArrayUser = [
         {
           icon: 'location_on',
           title: 'создать встречу',
@@ -42,12 +42,8 @@ export default {
           title: 'профиль',
           route: '/profile',
         },
-      ] : [
-        {
-          icon: 'supervisor_account',
-          title: 'просмотр встреч',
-          route: '/meetups',
-        },
+      ];
+      const btnsArrayVisitor = [
         {
           icon: 'tag_faces',
           title: 'Зарегистрироваться',
@@ -57,7 +53,15 @@ export default {
           icon: 'enhanced_encryption',
           title: 'войти',
           route: '/signin',
-        },];
+        },
+      ];
+
+      if (this.user) {
+        btnsArray.push.apply(btnsArray, btnsArrayUser);
+        } else {
+        btnsArray.push.apply(btnsArray, btnsArrayVisitor);
+        }
+        return btnsArray;
     },
   },
   methods: {

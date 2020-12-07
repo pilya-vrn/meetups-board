@@ -73,9 +73,9 @@ export default {
             location: this.location,
             photo: '',
             description: this.description,
-            date: this.date,
-            time: this.time,
+            date: this.date + ' ' + this.time,
           });
+
       }
     },
   },
