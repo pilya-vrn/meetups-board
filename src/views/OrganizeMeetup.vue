@@ -8,7 +8,17 @@
       <v-text-field label="Введите место проведения*"
         type="text" required v-model="location" style="padding-top: 30px;">
       </v-text-field>
-      <v-btn color="primary" width="200">Загрузить картинку</v-btn>
+      <v-file-input
+        placeholder="Загрузить фото*"
+        prepend-icon="mdi-camera"
+        @change="uploadPhoto"
+        accept="image/png, image/jpeg, image/bmp"
+      ></v-file-input>
+      <v-img
+      max-height="150"
+      max-width="250"
+      v-bind:src="imgSrc">
+      </v-img>
       <span style="padding-top: 50px;">Описание мероприятия*</span>
       <v-textarea v-model="description"></v-textarea>
       <h1 style="padding-top: 30px;">Выберете дату и время</h1>
@@ -18,14 +28,14 @@
           elevation="15"
           locale="ru"
           v-bind:first-day-of-week="1"></v-date-picker>
-          {{ date }}
+          <!-- {{ date }} -->
         <v-time-picker
           v-model="time"
           class="mt-4"
           format="24hr"
           elevation="15"
           ></v-time-picker>
-          {{ time }}
+          <!-- {{ time }} -->
       </div>
       <v-btn color="primary" width="200" @click.prevent="createMeetup">Создать встречу</v-btn>
     </v-row>
@@ -41,32 +51,50 @@ export default {
   name: 'OrganizeMeetup',
   components: {
   },
-  // computed() {
-  //    return time = '09:00';
-  // },
   data () {
     const todayDate = new Date();
-    // const tommorow = today .setDate(todayDate .getDate() + 1);
+    todayDate.setDate(todayDate.getDate() + 1);
       return {
-        date: todayDate .toISOString().substr(0, 10),
+        date: todayDate.toISOString().substr(0, 10),
         time: '09:00',
         title: '',
         location: '',
         description: '',
+        imgSrc: '',
+        photoFile: null,
       }
     },
   methods: {
-      // allowedHours: v => v % 2,
-      // allowedMinutes: v => v >= 10 && v <= 50,
-      // allowedStep: m => m % 10 === 0,
+    uploadPhoto(file) {
+      this.imgSrc = URL.createObjectURL(file);
+      this.photoFile = file;
+      // file.onload = function() {
+      //   URL.revokeObjectURL(this.imgSrc);
+      // }
+      // let reader = new FileReader();
+      // reader.onloadend = () => {
+      //   this.imgSrc = reader.result;
+      // }
+
+      // if (file) {
+      //   reader.readAsDataURL(file);
+      // } else {
+      //   this.imgSrc = "";
+      // }
+    },
       createMeetup () {
         if ((this.title === '') || (this.location === '') || (this.description === '')) {
         // eslint-disable-next-line no-alert
         alert('Заполните все  поля!');
       } else {
-        // eslint-disable-next-line no-alert
-        alert('название: ' + this.title + '  ' + 'место: ' +
-        this.location + '  ' + 'описание: ' + this.description);
+        this.$store.dispatch('createMeetup',
+          {
+            title: this.title,
+            location: this.location,
+            description: this.description,
+            date: new Date(`${date}T${time}`).toISOString(),
+            photoFile: this.photoFile,
+          });
       }
     },
   },

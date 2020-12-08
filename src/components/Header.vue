@@ -9,6 +9,10 @@
           <v-icon left v-html="item.icon"></v-icon>
           {{item.title}}
         </v-btn>
+        <v-btn link text v-if="user" @click="logUserOut">
+          <v-icon>exit_to_app
+          </v-icon>выйти
+        </v-btn>
       </v-toolbar-items>
     </v-app-bar>
 </template>
@@ -17,13 +21,17 @@
 export default {
   name: 'Header',
   computed: {
+    user() {
+      return this.$store.state.user;
+    },
     menyBtns() {
-      return [
+      let btnsArray = [
         {
           icon: 'supervisor_account',
           title: 'просмотр встреч',
           route: '/meetups',
-        },
+        },];
+      const btnsArrayUser = [
         {
           icon: 'location_on',
           title: 'создать встречу',
@@ -34,6 +42,8 @@ export default {
           title: 'профиль',
           route: '/profile',
         },
+      ];
+      const btnsArrayVisitor = [
         {
           icon: 'tag_faces',
           title: 'Зарегистрироваться',
@@ -45,8 +55,20 @@ export default {
           route: '/signin',
         },
       ];
+
+      if (this.user) {
+        btnsArray = btnsArray.concat(btnsArrayUser);
+        } else {
+        btnsArray = btnsArray.concat(btnsArrayVisitor);
+        }
+        return btnsArray;
     },
   },
-
+  methods: {
+  logUserOut() {
+      this.$store.dispatch('logUserOut');
+      this.$router.push('/');
+    },
+  },
 };
 </script>

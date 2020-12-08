@@ -36,6 +36,18 @@ export default {
       psw: '',
     };
   },
+   computed: {
+    user() {
+      return this.$store.state.user;
+    },
+  },
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/');
+      }
+    },
+  },
   methods: {
     signIn() {
       const re = /\S+@\S+\.\S+/;
@@ -46,8 +58,10 @@ export default {
         // eslint-disable-next-line no-alert
         alert('Введите корректный email');
       } else {
-        // eslint-disable-next-line no-alert
-        alert('Добро пожаловать');
+          this.$store.dispatch('signUserIn', {
+          email: this.email,
+          psw: this.psw,
+        });
       }
       this.email = '';
       this.psw = '';
