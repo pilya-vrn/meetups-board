@@ -61,21 +61,26 @@ export default {
         location: '',
         description: '',
         imgSrc: '',
-        file: null,
+        photoFile: null,
       }
     },
   methods: {
     uploadPhoto(file) {
-      let reader = new FileReader();
-      reader.onloadend = () => {
-        this.imgSrc = reader.result;
-      }
+      this.imgSrc = URL.createObjectURL(file);
+      this.photoFile = file;
+      // file.onload = function() {
+      //   URL.revokeObjectURL(this.imgSrc);
+      // }
+      // let reader = new FileReader();
+      // reader.onloadend = () => {
+      //   this.imgSrc = reader.result;
+      // }
 
-      if (file) {
-        reader.readAsDataURL(file);
-      } else {
-        this.imgSrc = "";
-      }
+      // if (file) {
+      //   reader.readAsDataURL(file);
+      // } else {
+      //   this.imgSrc = "";
+      // }
     },
       createMeetup () {
         if ((this.title === '') || (this.location === '') || (this.description === '')) {
@@ -86,10 +91,9 @@ export default {
           {
             title: this.title,
             location: this.location,
-            photo: '',
             description: this.description,
             date: new Date(`${date}T${time}`).toISOString(),
-            imgSrc: this.imgSrc,
+            photoFile: this.photoFile,
           });
       }
     },

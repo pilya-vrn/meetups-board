@@ -57,9 +57,9 @@ export default {
       ];
 
       if (this.user) {
-        btnsArray.push.apply(btnsArray, btnsArrayUser);
+        btnsArray = btnsArray.concat(btnsArrayUser);
         } else {
-        btnsArray.push.apply(btnsArray, btnsArrayVisitor);
+        btnsArray = btnsArray.concat(btnsArrayVisitor);
         }
         return btnsArray;
     },
