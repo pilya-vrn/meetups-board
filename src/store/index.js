@@ -9,22 +9,22 @@ export default new Vuex.Store({
     meetups: [
       {
         // eslint-disable-next-line global-require
-        src: require('../assets/voronezh-night-0034.jpg'),
+        imgSrc: require('../assets/voronezh-night-0034.jpg'),
         title: 'Встреча в Воронеже',
       },
       {
         // eslint-disable-next-line global-require
-        src: require('../assets/kharkiv.jpg.pagespeed.ce_.BcyzDuEqsy.jpg'),
+        imgSrc: require('../assets/kharkiv.jpg.pagespeed.ce_.BcyzDuEqsy.jpg'),
         title: 'Встреча в Харькове',
       },
       {
         // eslint-disable-next-line global-require
-        src: require('../assets/20122011131923.jpg'),
+        imgSrc: require('../assets/20122011131923.jpg'),
         title: 'Встреча в Донецке',
       },
       {
         // eslint-disable-next-line global-require
-        src: require('../assets/9a6838421a399c73a47b8c14ec3ec3e9_w540_h360_cx99_cy0_cw1709_ch1170.jpg'),
+        imgSrc: require('../assets/9a6838421a399c73a47b8c14ec3ec3e9_w540_h360_cx99_cy0_cw1709_ch1170.jpg'),
         title: 'Встреча в Белгороде',
       },
     ],
@@ -41,7 +41,9 @@ export default new Vuex.Store({
     // }
   },
   mutations: {
-    createMeetup() {},
+    createMeetup(state, payload) {
+      state.meetups.push(payload);
+    },
     resetStore(state) {
       state.meetups = [];
       state.user = null;
@@ -54,7 +56,35 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    createMeetup() {},
+    async createMeetup({state, commit}, payload) {
+      const userId = state.user.id;
+      let meetup = {
+        imgSrc: '',
+        title: payload.title,
+        description: payload.description,
+        date: payload.date,
+        location: payload.location,
+        createdBy: userId,
+      };
+      const data = await firebase.database().ref(`meetups`).push(meetup);
+
+      const filename = payload.photoFile.name;
+      const ext = filename.slice(filename.lastIndexOf('.'));
+      const fileData = await firebase
+          .storage()
+          .ref('meetups/' + data.key + ext)
+          .put(payload.photoFile);
+      const imgSrc = await fileData.ref.getDownloadURL();
+      await firebase
+          .database()
+          .ref('meetups')
+          .child(data.key)
+          .update({ imgSrc });
+      meetup.imgSrc = imgSrc;
+      commit('createMeetup', {
+        meetupId: data.key, ...meetup });
+        // console.log(data)
+    },
     async signUserUp({ commit }, { email, psw }) {
       try {
         const { user } = await firebase.auth().createUserWithEmailAndPassword(email, psw);

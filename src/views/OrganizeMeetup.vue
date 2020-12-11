@@ -68,6 +68,7 @@ export default {
     uploadPhoto(file) {
       this.imgSrc = URL.createObjectURL(file);
       this.photoFile = file;
+      // console.log(this.photoFile );
       // file.onload = function() {
       //   URL.revokeObjectURL(this.imgSrc);
       // }
@@ -92,10 +93,11 @@ export default {
             title: this.title,
             location: this.location,
             description: this.description,
-            date: new Date(`${date}T${time}`).toISOString(),
+            date: new Date(`${this.date}T${this.time}`).toISOString(),
             photoFile: this.photoFile,
           });
       }
+      this.$router.push('/');
     },
   },
 };

@@ -18,7 +18,7 @@
       <v-carousel-item v-for="(meetup, i) in meetups"
                        :key="i"
                        :title="meetup.title"
-                       :src="meetup.src">
+                       :src="meetup.imgSrc">
         <v-sheet height="100%" tile color="transparent">
           <v-row class="fill-height" align="end" justify="center">
               <div class="display-3" style="padding-bottom: 50px;">
