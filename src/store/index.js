@@ -41,6 +41,9 @@ export default new Vuex.Store({
     // }
   },
   mutations: {
+    setLoadedMeetups(state, meetups) {
+      state.meetups = state.meetups.concat(meetups);
+    },
     createMeetup(state, payload) {
       state.meetups.push(payload);
     },
@@ -51,11 +54,27 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.user = payload;
     },
-    setLoadedMeetups(state, meetups) {
-      state.meetups = meetups;
-    },
   },
   actions: {
+    async loadMeetups({state, commit}) {
+      // const userId = state.user.id;
+      const data = await firebase.database().ref(`meetups`).once('value');
+      const meetups = [];
+      const dbMeetups = data.val();
+      // console.log(dbMeetups);
+      for (const key in dbMeetups) {
+        meetups.push({
+          meetupId: key,
+          title: dbMeetups[key].title,
+          createdBy: dbMeetups[key].createdBy,
+          date: dbMeetups[key].date,
+          description: dbMeetups[key].description,
+          imgSrc: dbMeetups[key].imgSrc,
+          location: dbMeetups[key].location,
+        });
+      }
+      commit('setLoadedMeetups', meetups);
+    },
     async createMeetup({state, commit}, payload) {
       const userId = state.user.id;
       let meetup = {
