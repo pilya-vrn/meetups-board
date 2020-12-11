@@ -38,7 +38,7 @@ const routes = [
     component: Profile,
   },
   {
-    path: '/meetups',
+    path: '/meetups/:meetupId',
     name: 'ViewMeetups',
     component: ViewMeetups,
   },

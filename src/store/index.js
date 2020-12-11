@@ -11,21 +11,25 @@ export default new Vuex.Store({
         // eslint-disable-next-line global-require
         imgSrc: require('../assets/voronezh-night-0034.jpg'),
         title: 'Встреча в Воронеже',
+        meetupId:'vrn',
       },
       {
         // eslint-disable-next-line global-require
         imgSrc: require('../assets/kharkiv.jpg.pagespeed.ce_.BcyzDuEqsy.jpg'),
         title: 'Встреча в Харькове',
+        meetupId:'harkv',
       },
       {
         // eslint-disable-next-line global-require
         imgSrc: require('../assets/20122011131923.jpg'),
         title: 'Встреча в Донецке',
+        meetupId:'doneck',
       },
       {
         // eslint-disable-next-line global-require
         imgSrc: require('../assets/9a6838421a399c73a47b8c14ec3ec3e9_w540_h360_cx99_cy0_cw1709_ch1170.jpg'),
         title: 'Встреча в Белгороде',
+        meetupId:'blgrd',
       },
     ],
     user: null,
