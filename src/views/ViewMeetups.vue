@@ -1,21 +1,20 @@
 <template>
-  <div>
-    <v-card class="mx-auto" max-width="344">
+  <div  style="padding-top: 20px">
+    <v-card class="mx-auto" max-width="344" elevation="15">
       <v-img
       :src="currentMeetup.imgSrc"
-      height="200px"
+      height="350px"
       ></v-img>
-      <v-card-title> {{ currentMeetup.title }}
-      <v-card-subtitle>
-      {{currentMeetup.location}}
-    </v-card-subtitle>
+      <v-card-title>{{ currentMeetup.title }}
+      <v-card-subtitle>{{currentMeetup.location}}</v-card-subtitle>
+      <v-card-subtitle>{{date}}</v-card-subtitle>
       </v-card-title>
       <v-card-actions>
       <v-btn
-        color="orange lighten-2"
+        color="blue"
         text
       >
-        Explore
+        Описание
       </v-btn>
 
       <v-spacer></v-spacer>
@@ -31,7 +30,7 @@
         <v-divider></v-divider>
 
         <v-card-text>
-          I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
+          {{ currentMeetup.description }}
         </v-card-text>
       </div>
     </v-expand-transition>
@@ -51,17 +50,24 @@ export default {
     return {
       currentMeetup: null,
       show: false,
+      // date: '',
     }
   },
   computed: {
     meetups () {
         return this.$store.state.meetups;
-      }
+      },
+    date() {
+      const date = this.currentMeetup.date.substr(0, 10) + ' в '
+      + this.currentMeetup.date.substr(11, 5);
+      return date;
+    },
   },
-  created() {
+  methods: {},
+  created () {
     this.currentMeetup = this.meetups.find((meetup) => meetup.meetupId === this.$route.params.meetupId);
-    console.log(this.$route.params.meetupId)
-    console.log(this.currentMeetup)
+    // console.log(this.$route.params.meetupId)
+    // console.log(this.currentMeetup)
   },
 };
 </script>
