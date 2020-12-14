@@ -68,7 +68,7 @@ export default new Vuex.Store({
       state.meetups.push(payload);
     },
     resetStore(state) {
-      state.meetups = [];
+      // state.meetups = [];
       state.user = null;
     },
     setUser(state, payload) {

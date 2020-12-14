@@ -116,4 +116,7 @@ export default {
   justify-content: space-around;
   align-items: center;
 }
+v-date-picker {
+  height: 392px;
+}
 </style>

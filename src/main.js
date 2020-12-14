@@ -19,14 +19,15 @@ new Vue({
       messagingSenderId: '111257465855',
       appId: '1:111257465855:web:87906478e60ebe1baa2dca',
     });
+    this.$store.dispatch('loadMeetups');
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.commit('setUser', { id: user.uid });
+        // this.$store.dispatch('loadMeetups');
         // this.$store.dispatch('loadLists');
-        this.$store.dispatch('loadMeetups');
-      } else {
-        this.$store.commit('resetStore');
       }
+        // this.$store.commit('resetStore');
+
     });
   },
   router,
