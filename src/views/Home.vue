@@ -15,8 +15,8 @@
         v-if="user">создать встречу</v-btn>
   </div>
     <v-carousel cycle show-arrows-on-hover>
-      <v-carousel-item v-for="(meetup, i) in meetups"
-                       :key="i"
+      <v-carousel-item v-for="meetup in meetups"
+                       :key="meetup.meetupId"
                        :title="meetup.title"
                        :src="meetup.imgSrc"
                        @click.prevent="checkMeetup(meetup.meetupId)"

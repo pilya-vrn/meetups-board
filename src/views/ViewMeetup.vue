@@ -45,7 +45,7 @@
 // import Header from '@/components/Header.vue';
 
 export default {
-  name: 'ViewMeetups',
+  name: 'ViewMeetup',
   data() {
     return {
       currentMeetup: null,

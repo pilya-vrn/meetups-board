@@ -5,8 +5,9 @@ import SignIn from '../views/user/SignIn.vue';
 import SignUp from '../views/user/SignUp.vue';
 import OrganizeMeetup from '../views/OrganizeMeetup.vue';
 import Profile from '../views/Profile.vue';
-import ViewMeetups from '../views/ViewMeetups.vue';
-// import authGuard from './authGuard';
+import ViewMeetup from '../views/ViewMeetup.vue';
+import Meetups from '../views/Meetups.vue';
+import authGuard from './authGuard';
 
 Vue.use(VueRouter);
 
@@ -31,16 +32,23 @@ const routes = [
     path: '/createmeetups',
     name: 'OrganizeMeetup',
     component: OrganizeMeetup,
+    beforeEnter: authGuard,
   },
   {
     path: '/profile',
     name: 'Profile',
     component: Profile,
+    beforeEnter: authGuard,
   },
   {
     path: '/meetups/:meetupId',
-    name: 'ViewMeetups',
-    component: ViewMeetups,
+    name: 'ViewMeetup',
+    component: ViewMeetup,
+  },
+  {
+    path: '/meetups',
+    name: 'Meetups',
+    component: Meetups,
   },
 ];
 
