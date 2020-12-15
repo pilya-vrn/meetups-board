@@ -22,7 +22,7 @@ new Vue({
     this.$store.dispatch('loadMeetups');
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.$store.commit('setUser', { id: user.uid });
+        this.$store.commit('setUser', { id: user.uid, name: user.displayName, email: user.email });
         // this.$store.dispatch('loadMeetups');
         // this.$store.dispatch('loadLists');
       }

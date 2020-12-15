@@ -8,14 +8,17 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field prepend-icon="person" name="login" label="example@gmail.com"
+                  <v-text-field prepend-icon="person" name="name" label="Введите имя"
+                  type="text" required v-model="name">
+                  </v-text-field>
+                  <v-text-field prepend-icon="email" name="login" label="example@gmail.com"
                   type="email" required v-model="email">
                   </v-text-field>
-                  <v-text-field id="password" prepend-icon="lock" name="password"
-                  label="Введите пароль" type="password" required v-model="psw">
+                  <v-text-field prepend-icon="lock" name="password" label="Введите пароль"
+                  type="password" required v-model="psw">
                   </v-text-field>
-                  <v-text-field id="password" prepend-icon="lock" name="password"
-                  label="Повторите пароль" type="password" required v-model="pswRpt">
+                  <v-text-field prepend-icon="lock" name="password" label="Повторите пароль"
+                  type="password" required v-model="pswRpt">
                   </v-text-field>
                 </v-form>
               </v-card-text>
@@ -37,6 +40,7 @@ export default {
       email: '',
       psw: '',
       pswRpt: '',
+      name: '',
     };
   },
   computed: {
@@ -57,7 +61,8 @@ export default {
       if (this.psw !== this.pswRpt) {
         // eslint-disable-next-line no-alert
         alert('Пароли не совпадают!');
-      } else if ((this.email === '') || (this.psw === '') || (this.pswRpt === '')) {
+      } else if ((this.email === '') || (this.psw === '') || (this.pswRpt === '')
+              || (this.name === '')) {
         // eslint-disable-next-line no-alert
         alert('Заполните все  поля!');
       } else if (!re.test(this.email)) {
@@ -67,6 +72,7 @@ export default {
           this.$store.dispatch('signUserUp', {
           email: this.email,
           psw: this.psw,
+          name: this.name,
         });
       }
       this.email = '';

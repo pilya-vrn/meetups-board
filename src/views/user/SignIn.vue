@@ -8,7 +8,7 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field prepend-icon="person" name="login" label="example@gmail.com"
+                  <v-text-field prepend-icon="email" name="login" label="example@gmail.com"
                   type="email" required v-model="email">
                   </v-text-field>
                   <v-text-field id="password" prepend-icon="lock" name="password"
@@ -65,6 +65,7 @@ export default {
       }
       this.email = '';
       this.psw = '';
+      this.name = '';
     },
   },
 };

@@ -48,7 +48,11 @@ export default new Vuex.Store({
         date: '2020-12-30T15:00:00.000Z',
       },
     ],
-    user: null,
+    user: {
+      id: null,
+      name: null,
+      email: null,
+    },
     // {
     //   userId: , {
     //                title:
@@ -61,6 +65,9 @@ export default new Vuex.Store({
     // }
   },
   mutations: {
+    setUserName(state, name) {
+      state.name = name;
+    },
     setLoadedMeetups(state, meetups) {
       state.meetups = state.meetups.concat(meetups);
     },
@@ -124,10 +131,14 @@ export default new Vuex.Store({
         meetupId: data.key, ...meetup });
         // console.log(data)
     },
-    async signUserUp({ commit }, { email, psw }) {
+    async signUserUp({ commit }, { email, psw, name }) {
       try {
         const { user } = await firebase.auth().createUserWithEmailAndPassword(email, psw);
         const newUser = { id: user.uid };
+        await firebase.auth().currentUser.updateProfile({ displayName: name })
+        .then(() => {
+          commit('setUserName', name)
+        });
         commit('setUser', newUser);
       } catch (err) {
         // eslint-disable-next-line no-alert
@@ -137,7 +148,9 @@ export default new Vuex.Store({
     async signUserIn({ commit }, { email, psw }) {
       try {
         const { user } = await firebase.auth().signInWithEmailAndPassword(email, psw);
-        const newUser = { id: user.uid };
+        const currentUser = firebase.auth().currentUser;
+        console.log(currentUser);
+        const newUser = { id: user.uid, name: currentUser.displayName, email: currentUser.email };
         commit('setUser', newUser);
       } catch (err) {
         // eslint-disable-next-line no-alert
