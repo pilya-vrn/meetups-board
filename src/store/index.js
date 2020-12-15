@@ -15,7 +15,7 @@ export default new Vuex.Store({
         location: 'Воронеж, Адмиралтейская набережная',
         description: 'Будем удить рыбу',
         createdBy: '',
-        date: '2020-12-21T06:00:00.000Z',
+        date: '2020-12-28T06:00:00.000Z',
       },
       {
         // eslint-disable-next-line global-require
@@ -25,7 +25,7 @@ export default new Vuex.Store({
         location: 'Харьков, площадь Ленина',
         description: 'Собираю народ для игры в прятки',
         createdBy: '',
-        date: '2020-12-21T06:00:00.000Z',
+        date: '2020-12-28T16:00:00.000Z',
       },
       {
         // eslint-disable-next-line global-require
@@ -35,7 +35,7 @@ export default new Vuex.Store({
         location: 'Донецк, Центральная библиотека',
         description: 'Коллективное чтение А.П.Чехова, попробуем поставить "Вишневый сад"',
         createdBy: '',
-        date: '2020-12-21T06:00:00.000Z',
+        date: '2020-12-29T18:00:00.000Z',
       },
       {
         // eslint-disable-next-line global-require
@@ -45,7 +45,7 @@ export default new Vuex.Store({
         location: 'Белгород, Автовокзал',
         description: 'Заказываем автобус для поездки на озеро',
         createdBy: '',
-        date: '2020-12-21T06:00:00.000Z',
+        date: '2020-12-30T15:00:00.000Z',
       },
     ],
     user: null,
