@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row align="center">
-      <v-col cols=8>
+      <v-col cols=8 md="8">
     <!-- <v-flex  offset-7 align-self-center> -->
       <v-card v-for="meetup in meetups"
               :key="meetup.meetupId"
