@@ -8,6 +8,8 @@ import 'vuetify/dist/vuetify.min.css';
 
 Vue.config.productionTip = false;
 
+// export const bus = new Vue();
+
 new Vue({
   created() {
     firebase.initializeApp({

@@ -1,17 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import firebase from 'firebase';
+// import { bus } from '../main.js';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    meetups: [
-      {
+    meetups: [{
         // eslint-disable-next-line global-require
         imgSrc: require('../assets/voronezh-night-0034.jpg'),
         title: 'Встреча в Воронеже',
-        meetupId:'vrn',
+        meetupId: 'vrn',
         location: 'Воронеж, Адмиралтейская набережная',
         description: 'Будем удить рыбу',
         createdBy: '',
@@ -21,7 +21,7 @@ export default new Vuex.Store({
         // eslint-disable-next-line global-require
         imgSrc: require('../assets/kharkiv.jpg.pagespeed.ce_.BcyzDuEqsy.jpg'),
         title: 'Встреча в Харькове',
-        meetupId:'harkv',
+        meetupId: 'harkv',
         location: 'Харьков, площадь Ленина',
         description: 'Собираю народ для игры в прятки',
         createdBy: '',
@@ -31,7 +31,7 @@ export default new Vuex.Store({
         // eslint-disable-next-line global-require
         imgSrc: require('../assets/20122011131923.jpg'),
         title: 'Встреча в Донецке',
-        meetupId:'doneck',
+        meetupId: 'doneck',
         location: 'Донецк, Центральная библиотека',
         description: 'Коллективное чтение А.П.Чехова, попробуем поставить "Вишневый сад"',
         createdBy: '',
@@ -39,9 +39,11 @@ export default new Vuex.Store({
       },
       {
         // eslint-disable-next-line global-require
-        imgSrc: require('../assets/9a6838421a399c73a47b8c14ec3ec3e9_w540_h360_cx99_cy0_cw1709_ch1170.jpg'),
+        imgSrc: require(
+          '../assets/9a6838421a399c73a47b8c14ec3ec3e9_w540_h360_cx99_cy0_cw1709_ch1170.jpg'
+        ),
         title: 'Встреча в Белгороде',
-        meetupId:'blgrd',
+        meetupId: 'blgrd',
         location: 'Белгород, Автовокзал',
         description: 'Заказываем автобус для поездки на озеро',
         createdBy: '',
@@ -66,7 +68,10 @@ export default new Vuex.Store({
   },
   mutations: {
     setUserName(state, name) {
-      state.name = name;
+      state.user.name = name;
+    },
+    setUserEmail(state, email) {
+      state.user.email = email;
     },
     setLoadedMeetups(state, meetups) {
       state.meetups = state.meetups.concat(meetups);
@@ -83,7 +88,10 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async loadMeetups({state, commit}) {
+    async loadMeetups({
+      state,
+      commit
+    }) {
       // const userId = state.user.id;
       const data = await firebase.database().ref(`meetups`).once('value');
       const meetups = [];
@@ -102,7 +110,39 @@ export default new Vuex.Store({
       }
       commit('setLoadedMeetups', meetups);
     },
-    async createMeetup({state, commit}, payload) {
+    changeUserData({
+      commit
+    }, payload) {
+        let currentUser = firebase.auth().currentUser;
+        let credential = firebase.auth.EmailAuthProvider.credential(
+          payload.email,
+          payload.psw,
+        );
+        return currentUser.reauthenticateWithCredential(credential).then(function () {
+          if (payload.changeType === 'name') {
+            return currentUser.updateProfile({
+                displayName: payload.newName
+              })
+              .then(() => {
+                commit('setUserName', payload.newName);
+                // bus.$emit('profileDialogCloser');
+              });
+          } else if (payload.changeType === 'email') {
+            return currentUser.updateEmail(payload.newEmail)
+              .then(() => {
+                commit('setUserEmail', payload.newEmail);
+              });
+          } else if (payload.changeType === 'psw') {
+            return currentUser.updatePassword(payload.newPsw);
+          }
+        }).catch((err) => {
+          alert(err.message)
+        });
+    },
+    async createMeetup({
+      state,
+      commit
+    }, payload) {
       const userId = state.user.id;
       let meetup = {
         imgSrc: '',
@@ -117,51 +157,79 @@ export default new Vuex.Store({
       const filename = payload.photoFile.name;
       const ext = filename.slice(filename.lastIndexOf('.'));
       const fileData = await firebase
-          .storage()
-          .ref('meetups/' + data.key + ext)
-          .put(payload.photoFile);
+        .storage()
+        .ref('meetups/' + data.key + ext)
+        .put(payload.photoFile);
       const imgSrc = await fileData.ref.getDownloadURL();
       await firebase
-          .database()
-          .ref('meetups')
-          .child(data.key)
-          .update({ imgSrc });
+        .database()
+        .ref('meetups')
+        .child(data.key)
+        .update({
+          imgSrc
+        });
       meetup.imgSrc = imgSrc;
       commit('createMeetup', {
-        meetupId: data.key, ...meetup });
-        // console.log(data)
+        meetupId: data.key,
+        ...meetup
+      });
+      // console.log(data)
     },
-    async signUserUp({ commit }, { email, psw, name }) {
+    async signUserUp({
+      commit
+    }, {
+      email,
+      psw,
+      name
+    }) {
       try {
-        const { user } = await firebase.auth().createUserWithEmailAndPassword(email, psw);
-        const newUser = { id: user.uid };
-        await firebase.auth().currentUser.updateProfile({ displayName: name })
-        .then(() => {
-          commit('setUserName', name)
-        });
+        const {
+          user
+        } = await firebase.auth().createUserWithEmailAndPassword(email, psw);
+        const newUser = {
+          id: user.uid
+        };
+        await firebase.auth().currentUser.updateProfile({
+            displayName: name
+          })
+          .then(() => {
+            commit('setUserName', name)
+          });
         commit('setUser', newUser);
       } catch (err) {
         // eslint-disable-next-line no-alert
         alert(err.message);
       }
     },
-    async signUserIn({ commit }, { email, psw }) {
+    async signUserIn({
+      commit
+    }, {
+      email,
+      psw
+    }) {
       try {
-        const { user } = await firebase.auth().signInWithEmailAndPassword(email, psw);
+        const {
+          user
+        } = await firebase.auth().signInWithEmailAndPassword(email, psw);
         const currentUser = firebase.auth().currentUser;
         console.log(currentUser);
-        const newUser = { id: user.uid, name: currentUser.displayName, email: currentUser.email };
+        const newUser = {
+          id: user.uid,
+          name: currentUser.displayName,
+          email: currentUser.email
+        };
         commit('setUser', newUser);
       } catch (err) {
         // eslint-disable-next-line no-alert
         alert(err.message);
       }
     },
-    logUserOut({ commit }) {
+    logUserOut({
+      commit
+    }) {
       firebase.auth().signOut();
       commit('setUser', null);
     },
   },
-  modules: {
-  },
+  modules: {},
 });
