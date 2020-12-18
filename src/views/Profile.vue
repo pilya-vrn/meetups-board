@@ -108,10 +108,13 @@
     methods: {
       changeUserData() {
         const re = /\S+@\S+\.\S+/;
-        if ((this.newEmail === '') && (this.newPsw === '') && (this.newName === '')) {
+        if ((this.email === '') || (this.psw === '')) {
+          // eslint-disable-next-line no-alert
+        alert('Введите email и пароль');
+        } else if ((this.newEmail === '') && (this.newPsw === '') && (this.newName === '')) {
         // eslint-disable-next-line no-alert
         alert('Заполните поле, которое необходимо изменить');
-      } else if (!re.test(this.email)) {
+      } else if (!re.test(this.newEmail)) {
         // eslint-disable-next-line no-alert
         alert('Введите корректный email');
       } else {
@@ -130,9 +133,7 @@
           this.newEmail = '';
           this.newPsw = '';
         })
-
       }
-
       },
     },
     // created() {
