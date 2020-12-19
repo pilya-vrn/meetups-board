@@ -1,3 +1,6 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 import Vue from 'vue';
 import Vuex from 'vuex';
 import firebase from 'firebase';
@@ -8,47 +11,47 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     meetups: [{
-        // eslint-disable-next-line global-require
-        imgSrc: require('../assets/voronezh-night-0034.jpg'),
-        title: 'Встреча в Воронеже',
-        meetupId: 'vrn',
-        location: 'Воронеж, Адмиралтейская набережная',
-        description: 'Будем удить рыбу',
-        createdBy: '',
-        date: '2020-12-28T06:00:00.000Z',
-      },
-      {
-        // eslint-disable-next-line global-require
-        imgSrc: require('../assets/kharkiv.jpg.pagespeed.ce_.BcyzDuEqsy.jpg'),
-        title: 'Встреча в Харькове',
-        meetupId: 'harkv',
-        location: 'Харьков, площадь Ленина',
-        description: 'Собираю народ для игры в прятки',
-        createdBy: '',
-        date: '2020-12-28T16:00:00.000Z',
-      },
-      {
-        // eslint-disable-next-line global-require
-        imgSrc: require('../assets/20122011131923.jpg'),
-        title: 'Встреча в Донецке',
-        meetupId: 'doneck',
-        location: 'Донецк, Центральная библиотека',
-        description: 'Коллективное чтение А.П.Чехова, попробуем поставить "Вишневый сад"',
-        createdBy: '',
-        date: '2020-12-29T18:00:00.000Z',
-      },
-      {
-        // eslint-disable-next-line global-require
-        imgSrc: require(
-          '../assets/9a6838421a399c73a47b8c14ec3ec3e9_w540_h360_cx99_cy0_cw1709_ch1170.jpg'
-        ),
-        title: 'Встреча в Белгороде',
-        meetupId: 'blgrd',
-        location: 'Белгород, Автовокзал',
-        description: 'Заказываем автобус для поездки на озеро',
-        createdBy: '',
-        date: '2020-12-30T15:00:00.000Z',
-      },
+      // eslint-disable-next-line global-require
+      imgSrc: require('../assets/voronezh-night-0034.jpg'),
+      title: 'Встреча в Воронеже',
+      meetupId: 'vrn',
+      location: 'Воронеж, Адмиралтейская набережная',
+      description: 'Будем удить рыбу',
+      createdBy: '',
+      date: '2020-12-28T06:00:00.000Z',
+    },
+    {
+      // eslint-disable-next-line global-require
+      imgSrc: require('../assets/kharkiv.jpg.pagespeed.ce_.BcyzDuEqsy.jpg'),
+      title: 'Встреча в Харькове',
+      meetupId: 'harkv',
+      location: 'Харьков, площадь Ленина',
+      description: 'Собираю народ для игры в прятки',
+      createdBy: '',
+      date: '2020-12-28T16:00:00.000Z',
+    },
+    {
+      // eslint-disable-next-line global-require
+      imgSrc: require('../assets/20122011131923.jpg'),
+      title: 'Встреча в Донецке',
+      meetupId: 'doneck',
+      location: 'Донецк, Центральная библиотека',
+      description: 'Коллективное чтение А.П.Чехова, попробуем поставить "Вишневый сад"',
+      createdBy: '',
+      date: '2020-12-29T18:00:00.000Z',
+    },
+    {
+      // eslint-disable-next-line global-require
+      imgSrc: require(
+        '../assets/9a6838421a399c73a47b8c14ec3ec3e9_w540_h360_cx99_cy0_cw1709_ch1170.jpg',
+      ),
+      title: 'Встреча в Белгороде',
+      meetupId: 'blgrd',
+      location: 'Белгород, Автовокзал',
+      description: 'Заказываем автобус для поездки на озеро',
+      createdBy: '',
+      date: '2020-12-30T15:00:00.000Z',
+    },
     ],
     user: {
       id: null,
@@ -89,11 +92,10 @@ export default new Vuex.Store({
   },
   actions: {
     async loadMeetups({
-      state,
-      commit
+      commit,
     }) {
       // const userId = state.user.id;
-      const data = await firebase.database().ref(`meetups`).once('value');
+      const data = await firebase.database().ref('meetups').once('value');
       const meetups = [];
       const dbMeetups = data.val();
       // console.log(dbMeetups);
@@ -110,41 +112,37 @@ export default new Vuex.Store({
       }
       commit('setLoadedMeetups', meetups);
     },
-    changeUserData({
-      commit
-    }, payload) {
-        let currentUser = firebase.auth().currentUser;
-        let credential = firebase.auth.EmailAuthProvider.credential(
-          payload.email,
-          payload.psw,
-        );
-        return currentUser.reauthenticateWithCredential(credential).then(function () {
-          if (payload.changeType === 'name') {
-            return currentUser.updateProfile({
-                displayName: payload.newName
-              })
-              .then(() => {
-                commit('setUserName', payload.newName);
-                // bus.$emit('profileDialogCloser');
-              });
-          } else if (payload.changeType === 'email') {
-            return currentUser.updateEmail(payload.newEmail)
-              .then(() => {
-                commit('setUserEmail', payload.newEmail);
-              });
-          } else if (payload.changeType === 'psw') {
-            return currentUser.updatePassword(payload.newPsw);
-          }
-        }).catch((err) => {
-          alert(err.message)
-        });
+    changeUserData({ commit }, payload) {
+      const { currentUser } = firebase.auth();
+      const credential = firebase.auth.EmailAuthProvider.credential(payload.email, payload.psw);
+      return currentUser.reauthenticateWithCredential(credential).then(() => {
+        if (payload.changeType === 'name') {
+          return currentUser.updateProfile({
+            displayName: payload.newName,
+          })
+            .then(() => {
+              commit('setUserName', payload.newName);
+              // bus.$emit('profileDialogCloser');
+            });
+        } if (payload.changeType === 'email') {
+          return currentUser.updateEmail(payload.newEmail)
+            .then(() => {
+              commit('setUserEmail', payload.newEmail);
+            });
+        } if (payload.changeType === 'psw') {
+          return currentUser.updatePassword(payload.newPsw);
+        }
+      }).catch((err) => {
+        // eslint-disable-next-line no-alert
+        alert(err.message);
+      });
     },
     async createMeetup({
       state,
-      commit
+      commit,
     }, payload) {
       const userId = state.user.id;
-      let meetup = {
+      const meetup = {
         imgSrc: '',
         title: payload.title,
         description: payload.description,
@@ -152,13 +150,13 @@ export default new Vuex.Store({
         location: payload.location,
         createdBy: userId,
       };
-      const data = await firebase.database().ref(`meetups`).push(meetup);
+      const data = await firebase.database().ref('meetups').push(meetup);
 
       const filename = payload.photoFile.name;
       const ext = filename.slice(filename.lastIndexOf('.'));
       const fileData = await firebase
         .storage()
-        .ref('meetups/' + data.key + ext)
+        .ref(`meetups/${data.key}${ext}`)
         .put(payload.photoFile);
       const imgSrc = await fileData.ref.getDownloadURL();
       await firebase
@@ -166,34 +164,34 @@ export default new Vuex.Store({
         .ref('meetups')
         .child(data.key)
         .update({
-          imgSrc
+          imgSrc,
         });
       meetup.imgSrc = imgSrc;
       commit('createMeetup', {
         meetupId: data.key,
-        ...meetup
+        ...meetup,
       });
       // console.log(data)
     },
     async signUserUp({
-      commit
+      commit,
     }, {
       email,
       psw,
-      name
+      name,
     }) {
       try {
         const {
-          user
+          user,
         } = await firebase.auth().createUserWithEmailAndPassword(email, psw);
         const newUser = {
-          id: user.uid
+          id: user.uid,
         };
         await firebase.auth().currentUser.updateProfile({
-            displayName: name
-          })
+          displayName: name,
+        })
           .then(() => {
-            commit('setUserName', name)
+            commit('setUserName', name);
           });
         commit('setUser', newUser);
       } catch (err) {
@@ -202,21 +200,20 @@ export default new Vuex.Store({
       }
     },
     async signUserIn({
-      commit
+      commit,
     }, {
       email,
-      psw
+      psw,
     }) {
       try {
         const {
-          user
+          user,
         } = await firebase.auth().signInWithEmailAndPassword(email, psw);
-        const currentUser = firebase.auth().currentUser;
-        console.log(currentUser);
+        const { currentUser } = firebase.auth();
         const newUser = {
           id: user.uid,
           name: currentUser.displayName,
-          email: currentUser.email
+          email: currentUser.email,
         };
         commit('setUser', newUser);
       } catch (err) {
@@ -225,7 +222,7 @@ export default new Vuex.Store({
       }
     },
     logUserOut({
-      commit
+      commit,
     }) {
       firebase.auth().signOut();
       commit('setUser', null);

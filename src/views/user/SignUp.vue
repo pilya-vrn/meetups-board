@@ -69,7 +69,7 @@ export default {
         // eslint-disable-next-line no-alert
         alert('Введите корректный email');
       } else {
-          this.$store.dispatch('signUserUp', {
+        this.$store.dispatch('signUserUp', {
           email: this.email,
           psw: this.psw,
           name: this.name,

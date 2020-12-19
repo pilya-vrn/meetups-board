@@ -82,43 +82,43 @@
 </template>
 
 <script>
-  // @ is an alias to /src
+// @ is an alias to /src
 
-  // import { bus } from '../main.js';
+// import { bus } from '../main.js';
 
-  export default {
-    name: 'Profile',
-    data() {
-      return {
-        tabMode: 'data',
-        dialog: false,
-        email: '',
-        psw: '',
-        newName: '',
-        newEmail: '',
-        newPsw: '',
-        changeType: 'name',
-      }
+export default {
+  name: 'Profile',
+  data() {
+    return {
+      tabMode: 'data',
+      dialog: false,
+      email: '',
+      psw: '',
+      newName: '',
+      newEmail: '',
+      newPsw: '',
+      changeType: 'name',
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
     },
-    computed: {
-      user() {
-        return this.$store.state.user;
-      },
-    },
-    methods: {
-      changeUserData() {
-        const re = /\S+@\S+\.\S+/;
-        if ((this.email === '') || (this.psw === '')) {
-          // eslint-disable-next-line no-alert
+  },
+  methods: {
+    changeUserData() {
+      const re = /\S+@\S+\.\S+/;
+      if ((this.email === '') || (this.psw === '')) {
+        // eslint-disable-next-line no-alert
         alert('Введите email и пароль');
-        } else if ((this.newEmail === '') && (this.newPsw === '') && (this.newName === '')) {
+      } else if ((this.newEmail === '') && (this.newPsw === '') && (this.newName === '')) {
         // eslint-disable-next-line no-alert
         alert('Заполните поле, которое необходимо изменить');
       } else if (!re.test(this.newEmail)) {
         // eslint-disable-next-line no-alert
         alert('Введите корректный email');
       } else {
-          this.$store.dispatch('changeUserData', {
+        this.$store.dispatch('changeUserData', {
           email: this.email,
           psw: this.psw,
           newName: this.newName,
@@ -132,21 +132,21 @@
           this.newName = '';
           this.newEmail = '';
           this.newPsw = '';
-        })
+        });
       }
-      },
     },
-    // created() {
-    //   bus.$on('profileDialogCloser', () => {
-    //     this.dialog = false;
-    //     this.email = '';
-    //     this.psw = '';
-    //     this.newName = '';
-    //     this.newEmail = '';
-    //     this.newPsw = '';
-    //   })
-    // },
-    components: {},
-  };
+  },
+  // created() {
+  //   bus.$on('profileDialogCloser', () => {
+  //     this.dialog = false;
+  //     this.email = '';
+  //     this.psw = '';
+  //     this.newName = '';
+  //     this.newEmail = '';
+  //     this.newPsw = '';
+  //   })
+  // },
+  components: {},
+};
 
 </script>

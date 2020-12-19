@@ -36,7 +36,7 @@ export default {
       psw: '',
     };
   },
-   computed: {
+  computed: {
     user() {
       return this.$store.state.user;
     },
@@ -58,7 +58,7 @@ export default {
         // eslint-disable-next-line no-alert
         alert('Введите корректный email');
       } else {
-          this.$store.dispatch('signUserIn', {
+        this.$store.dispatch('signUserIn', {
           email: this.email,
           psw: this.psw,
         });
