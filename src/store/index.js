@@ -118,13 +118,13 @@ export default new Vuex.Store({
         await currentUser.reauthenticateWithCredential(credential);
 
         if (payload.changeType === 'name') {
-          await currentUser.updateProfile({ displayName: payload.newName });
+          currentUser.updateProfile({ displayName: payload.newName });
           commit('setUserName', payload.newName);
         } if (payload.changeType === 'email') {
-          await currentUser.updateEmail(payload.newEmail);
+          currentUser.updateEmail(payload.newEmail);
           commit('setUserEmail', payload.newEmail);
         } if (payload.changeType === 'psw') {
-          await currentUser.updatePassword(payload.newPsw);
+          currentUser.updatePassword(payload.newPsw);
         }
       } catch (err) {
         // eslint-disable-next-line no-alert
