@@ -94,7 +94,6 @@ export default new Vuex.Store({
     async loadMeetups({
       commit,
     }) {
-      // const userId = state.user.id;
       const data = await firebase.database().ref('meetups').once('value');
       const meetups = [];
       const dbMeetups = data.val();
@@ -112,30 +111,25 @@ export default new Vuex.Store({
       }
       commit('setLoadedMeetups', meetups);
     },
-    changeUserData({ commit }, payload) {
+    async changeUserData({ commit }, payload) {
       const { currentUser } = firebase.auth();
       const credential = firebase.auth.EmailAuthProvider.credential(payload.email, payload.psw);
-      return currentUser.reauthenticateWithCredential(credential).then(() => {
+      try {
+        await currentUser.reauthenticateWithCredential(credential);
+
         if (payload.changeType === 'name') {
-          return currentUser.updateProfile({
-            displayName: payload.newName,
-          })
-            .then(() => {
-              commit('setUserName', payload.newName);
-              // bus.$emit('profileDialogCloser');
-            });
+          await currentUser.updateProfile({ displayName: payload.newName });
+          commit('setUserName', payload.newName);
         } if (payload.changeType === 'email') {
-          return currentUser.updateEmail(payload.newEmail)
-            .then(() => {
-              commit('setUserEmail', payload.newEmail);
-            });
+          await currentUser.updateEmail(payload.newEmail);
+          commit('setUserEmail', payload.newEmail);
         } if (payload.changeType === 'psw') {
-          return currentUser.updatePassword(payload.newPsw);
+          await currentUser.updatePassword(payload.newPsw);
         }
-      }).catch((err) => {
+      } catch (err) {
         // eslint-disable-next-line no-alert
         alert(err.message);
-      });
+      }
     },
     async createMeetup({ state, commit }, payload) {
       const userId = state.user.id;
