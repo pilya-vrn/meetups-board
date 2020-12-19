@@ -96,8 +96,9 @@ export default {
             date: new Date(`${this.date}T${this.time}`).toISOString(),
             photoFile: this.photoFile,
           });
+        this.$router.push('/');
       }
-      this.$router.push('/');
+
     },
   },
 };
