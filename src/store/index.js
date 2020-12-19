@@ -137,10 +137,7 @@ export default new Vuex.Store({
         alert(err.message);
       });
     },
-    async createMeetup({
-      state,
-      commit,
-    }, payload) {
+    async createMeetup({ state, commit }, payload) {
       const userId = state.user.id;
       const meetup = {
         imgSrc: '',
