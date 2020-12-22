@@ -57,6 +57,7 @@ export default new Vuex.Store({
       id: null,
       name: null,
       email: null,
+      subscriptions: null,
     },
     // {
     //   userId: , {
@@ -89,8 +90,47 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.user = payload;
     },
+    subscribeOnMeetup(state, meetupId) {
+      if (!state.user.subscriptions) {
+      Vue.set(state.user, 'subscriptions', []);
+      }
+      state.user.subscriptions.push(meetupId);
+    },
+    unSubscribeOnMeetup(state, meetupId) {
+      const meetupIndex = state.user.subscriptions.indexOf(meetupId);
+      state.user.subscriptions.splice(meetupIndex, 1);
+    },
+    setLoadedSubscriptions(state, subscriptions) {
+      Vue.set(state.user, 'subscriptions', subscriptions);
+  },
   },
   actions: {
+    async loadUserData({ state, commit }) {
+      const userId = state.user.id;
+      const data = await firebase
+          .database()
+          .ref(`users/${userId}`)
+          .once('value');
+      const dbUserData = data.val();
+      if (dbUserData) {
+          commit(
+              'setLoadedSubscriptions',
+              Object.keys(dbUserData.subscriptions)
+          );
+      }
+    },
+    async unSubscribeOnMeetup({commit}, payload) {
+      await firebase.database().ref(`users/${payload.userId}/subscriptions/${payload.meetupId}`)
+      .set(false);
+      const meetupId = payload.payload;
+      commit('unSubscribeOnMeetup', meetupId)
+    },
+    async subscribeOnMeetup({commit}, payload) {
+      console.log(payload);
+      await firebase.database().ref(`users/${payload.userId}/subscriptions/${payload.meetupId}`)
+      .set(true);
+      commit('subscribeOnMeetup', payload.meetupId);
+    },
     async loadMeetups({
       commit,
     }) {

@@ -5,8 +5,16 @@
       <v-card-title>{{ currentMeetup.title }}
         <v-card-subtitle>{{currentMeetup.location}}</v-card-subtitle>
         <v-card-subtitle>{{date}}</v-card-subtitle>
+        <v-btn color="primary"
+          @click="subscribeOnMeetup(currentMeetup)"
+          v-if="user"
+          :loading="loading"
+          :disabled="loading">
+              {{ isUserSubscribed ? 'Отписаться' : 'Подписаться' }}
+            </v-btn>
       </v-card-title>
       <v-card-actions>
+
         <v-btn color="blue" text>
           Описание
         </v-btn>
@@ -41,6 +49,9 @@
       return {
         currentMeetup: null,
         show: false,
+        subscribe: false,
+        loading: false,
+        // loader: null,
         // date: '',
       }
     },
@@ -53,8 +64,43 @@
           this.currentMeetup.date.substr(11, 5);
         return date;
       },
+      user() {
+        return this.$store.state.user;
+      },
+      subscriptions() {
+        return this.user.subscriptions || [];
+      },
+      isUserSubscribed() {
+        return this.subscriptions.includes(this.currentMeetup.meetupId);
+      },
     },
-    methods: {},
+    methods: {
+      subscribeOnMeetup(currentMeetup) {
+        if (!this.isUserSubscribed) {
+          this.loading = true;
+          this.$store.dispatch('subscribeOnMeetup', {
+            userId: this.user.id,
+            meetupId: currentMeetup.meetupId,
+          }).then(() => {
+          this.loading = false;
+        });
+        } else {
+          this.loading = true;
+          this.$store.dispatch('unSubscribeOnMeetup', {
+            userId: this.user.id,
+            meetupId: currentMeetup.meetupId,
+          }).then(() => {
+          this.loading = false;
+        });
+        }
+        // this.subscribe = !this.subscribe;
+        // if (this.subscribe) {
+        //   this.user.subscribedMeetups = currentMeetup.imgSrc;
+        // } else {
+        //   this.user.subscribedMeetups = '';
+        // }
+      },
+    },
     created() {
       this.currentMeetup = this.meetups.find((meetup) => meetup.meetupId === this.$route.params
         .meetupId);
