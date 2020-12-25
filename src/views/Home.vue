@@ -52,6 +52,14 @@ export default {
         return this.$store.state.meetups;
     },
   },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+    meetups () {
+        return this.$store.state.meetups;
+    },
+  },
 };
 </script>
 <style scoped>

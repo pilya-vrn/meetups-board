@@ -6,6 +6,7 @@ import Vuex from 'vuex';
 import firebase from 'firebase';
 // import { bus } from '../main.js';
 
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({

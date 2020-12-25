@@ -30,7 +30,9 @@ export default {
           icon: 'supervisor_account',
           title: 'просмотр встреч',
           route: '/meetups',
+
         }];
+
       const btnsArrayUser = [
         {
           icon: 'location_on',
@@ -58,6 +60,7 @@ export default {
 
       if (this.user) {
         btnsArray = btnsArray.concat(btnsArrayUser);
+
       } else {
         btnsArray = btnsArray.concat(btnsArrayVisitor);
       }
@@ -66,6 +69,7 @@ export default {
   },
   methods: {
     logUserOut() {
+
       this.$store.dispatch('logUserOut');
       this.$router.push('/');
     },

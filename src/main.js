@@ -29,7 +29,6 @@ new Vue({
         // this.$store.dispatch('loadLists');
       }
         // this.$store.commit('resetStore');
-
     });
     this.$store.dispatch('loadMeetups');
   },

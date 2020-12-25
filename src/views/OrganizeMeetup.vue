@@ -68,7 +68,6 @@ export default {
     uploadPhoto(file) {
       this.imgSrc = URL.createObjectURL(file);
       this.photoFile = file;
-      // console.log(this.photoFile );
       // file.onload = function() {
       //   URL.revokeObjectURL(this.imgSrc);
       // }
