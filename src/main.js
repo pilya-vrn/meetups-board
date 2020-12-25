@@ -27,6 +27,8 @@ new Vue({
         this.$store.dispatch('loadUserData');
         // this.$store.dispatch('loadMeetups');
         // this.$store.dispatch('loadLists');
+      } else {
+        this.$store.commit('setUser', null);
       }
         // this.$store.commit('resetStore');
     });
