@@ -126,7 +126,7 @@ export default new Vuex.Store({
       commit('unSubscribeOnMeetup', meetupId)
     },
     async subscribeOnMeetup({commit}, payload) {
-      console.log(payload);
+      // console.log(payload);
       await firebase.database().ref(`users/${payload.userId}/subscriptions/${payload.meetupId}`)
       .set(true);
       commit('subscribeOnMeetup', payload.meetupId);

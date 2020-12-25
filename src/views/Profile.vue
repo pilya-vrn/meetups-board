@@ -35,7 +35,7 @@
 
           </v-tab-item>
           <v-tab-item :key="'meetups'">
-
+            <UserSubscribedMeetups></UserSubscribedMeetups>
           </v-tab-item>
         </v-tabs>
       </v-flex>
@@ -48,11 +48,13 @@
 
 // import { bus } from '../main.js';
 import UserDialog from '@/components/UserDialog.vue';
+import UserSubscribedMeetups from '@/components/UserSubscribedMeetups.vue';
 
 export default {
   name: 'Profile',
   components: {
     UserDialog,
+    UserSubscribedMeetups,
   },
   data() {
     return {

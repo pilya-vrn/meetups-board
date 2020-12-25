@@ -33,26 +33,31 @@
       </v-flex>
     </v-layout>
   </v-container>
-
 </template>
 
 <script>
-  export default {
-    name: 'Meetups',
-    // data() {
-    //   return {
-    //     currentMeetup: null,
-    //   };
-    // },
-    computed: {
-      meetups() {
-        return this.$store.state.meetups;
-      },
+export default {
+  name: 'UserSubscribedMeetups',
+  computed: {
+    user() {
+      return this.$store.state.user;
     },
-  }
+    subscriptions() {
+      return this.user.subscriptions || [];
+    },
+    meetups() {
+      let allMeetups = this.$store.state.meetups;
+      let meetups = allMeetups.filter((meetup) => {
+        return this.subscriptions.includes(meetup.meetupId);
+      });
+      return meetups;
+    },
 
+    // isUserSubscribed() {
+    //   return this.subscriptions.includes(this.currentMeetup.meetupId);
+    // },
+  },
+  components: {
+  },
+};
 </script>
-
-<style scoped>
-
-</style>
