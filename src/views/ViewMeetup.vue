@@ -45,9 +45,10 @@
 
   export default {
     name: 'ViewMeetup',
+    props: ['meetupId'],
     data() {
       return {
-        currentMeetup: null,
+        // currentMeetup: null,
         show: false,
         subscribe: false,
         loading: false,
@@ -73,37 +74,30 @@
       isUserSubscribed() {
         return this.subscriptions.includes(this.currentMeetup.meetupId);
       },
+      currentMeetup() {
+        return this.meetups.find((meetup) => meetup.meetupId === this.$route.params.meetupId);
+      }
     },
     methods: {
       subscribeOnMeetup(currentMeetup) {
+        this.loading = true;
+
         if (!this.isUserSubscribed) {
-          this.loading = true;
-          this.$store.dispatch('subscribeOnMeetup', {
-            userId: this.user.id,
-            meetupId: currentMeetup.meetupId,
-          }).then(() => {
+          this.$store.dispatch('subscribeOnMeetup', {meetupId: currentMeetup.meetupId})
+          .then(() => {
           this.loading = false;
         });
         } else {
-          this.loading = true;
-          this.$store.dispatch('unSubscribeOnMeetup', {
-            userId: this.user.id,
-            meetupId: currentMeetup.meetupId,
-          }).then(() => {
+          this.$store.dispatch('unSubscribeOnMeetup', {meetupId: currentMeetup.meetupId})
+          .then(() => {
           this.loading = false;
         });
         }
-        // this.subscribe = !this.subscribe;
-        // if (this.subscribe) {
-        //   this.user.subscribedMeetups = currentMeetup.imgSrc;
-        // } else {
-        //   this.user.subscribedMeetups = '';
-        // }
       },
     },
     created() {
-      this.currentMeetup = this.meetups.find((meetup) => meetup.meetupId === this.$route.params
-        .meetupId);
+      // this.currentMeetup = this.meetups.find((meetup) => meetup.meetupId === this.$route.params
+      //   .meetupId);
       // console.log(this.$route.params.meetupId)
       // console.log(this.currentMeetup)
     },

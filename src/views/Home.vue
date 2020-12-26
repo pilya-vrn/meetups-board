@@ -19,8 +19,9 @@
                        :key="meetup.meetupId"
                        :title="meetup.title"
                        :src="meetup.imgSrc"
-                       @click.prevent="checkMeetup(meetup.meetupId)"
+                       :to="'/meetups/' + meetup.meetupId"
                        style="cursor:pointer">
+                       <!-- @click.prevent="checkMeetup(meetup.meetupId)" -->
         <v-sheet height="100%" tile color="transparent">
           <v-row class="fill-height" align="end" justify="center">
               <div class="display-3" style="padding-bottom: 50px;">
@@ -39,11 +40,11 @@
 
 export default {
   name: 'Home',
-  methods: {
-    checkMeetup(meetupId) {
-      this.$router.push('/meetups/' + meetupId);
-    },
-  },
+  // methods: {
+  //   checkMeetup(meetupId) {
+  //     this.$router.push('/meetups/' + meetupId);
+  //   },
+  // },
   computed: {
     user() {
       return this.$store.state.user;

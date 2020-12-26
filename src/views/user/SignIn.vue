@@ -65,7 +65,6 @@ export default {
       }
       this.email = '';
       this.psw = '';
-      this.name = '';
     },
   },
 };

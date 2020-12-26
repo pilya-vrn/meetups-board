@@ -59,12 +59,10 @@ export default {
       ];
 
       if (this.user) {
-        btnsArray = btnsArray.concat(btnsArrayUser);
-
+        return btnsArray.concat(btnsArrayUser);
       } else {
-        btnsArray = btnsArray.concat(btnsArrayVisitor);
+        return btnsArray.concat(btnsArrayVisitor);
       }
-      return btnsArray;
     },
   },
   methods: {
