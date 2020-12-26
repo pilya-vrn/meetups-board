@@ -93,8 +93,8 @@
         return this.$store.state.meetups;
       },
       date() {
-        const date = this.currentMeetup.date.substr(0, 10) + ' в ' +
-          this.currentMeetup.date.substr(11, 5);
+        const date = new Date(this.currentMeetup.date).toLocaleDateString() + ' в '
+        + new Date(this.currentMeetup.date).toLocaleTimeString().substr(1, 4);
         return date;
       },
       user() {
