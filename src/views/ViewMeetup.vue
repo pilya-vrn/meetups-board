@@ -1,5 +1,37 @@
 <template>
-  <div style="padding-top: 20px">
+  <v-container v-if="currentMeetup">
+    <v-row>
+      <v-col>
+        <v-img :src="currentMeetup.imgSrc" max-height="60vh" contain />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-btn color="primary" @click="subscribeOnMeetup(currentMeetup)" v-if="user"
+          :loading="loading" :disabled="loading">
+          {{ isUserSubscribed ? 'Отписаться' : 'Подписаться' }}
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <h1>{{ currentMeetup.title}}</h1>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <i>{{ date }}</i>
+        ,
+        <b>{{ currentMeetup.location }}</b>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <p>{{ currentMeetup.description }}</p>
+      </v-col>
+    </v-row>
+  </v-container>
+  <!-- <div style="padding-top: 20px">
     <v-card class="mx-auto" max-width="344" elevation="15">
       <v-img :src="currentMeetup.imgSrc" height="350px"></v-img>
       <v-card-title>{{ currentMeetup.title }}
@@ -35,7 +67,7 @@
         </v-expand-transition>
       </v-card-actions>
     </v-card>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -83,15 +115,19 @@
         this.loading = true;
 
         if (!this.isUserSubscribed) {
-          this.$store.dispatch('subscribeOnMeetup', {meetupId: currentMeetup.meetupId})
-          .then(() => {
-          this.loading = false;
-        });
+          this.$store.dispatch('subscribeOnMeetup', {
+              meetupId: currentMeetup.meetupId
+            })
+            .then(() => {
+              this.loading = false;
+            });
         } else {
-          this.$store.dispatch('unSubscribeOnMeetup', {meetupId: currentMeetup.meetupId})
-          .then(() => {
-          this.loading = false;
-        });
+          this.$store.dispatch('unSubscribeOnMeetup', {
+              meetupId: currentMeetup.meetupId
+            })
+            .then(() => {
+              this.loading = false;
+            });
         }
       },
     },
