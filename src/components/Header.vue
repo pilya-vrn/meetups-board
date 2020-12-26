@@ -30,7 +30,9 @@ export default {
           icon: 'supervisor_account',
           title: 'просмотр встреч',
           route: '/meetups',
-        },];
+
+        }];
+
       const btnsArrayUser = [
         {
           icon: 'location_on',
@@ -57,15 +59,15 @@ export default {
       ];
 
       if (this.user) {
-        btnsArray = btnsArray.concat(btnsArrayUser);
-        } else {
-        btnsArray = btnsArray.concat(btnsArrayVisitor);
-        }
-        return btnsArray;
+        return btnsArray.concat(btnsArrayUser);
+      } else {
+        return btnsArray.concat(btnsArrayVisitor);
+      }
     },
   },
   methods: {
-  logUserOut() {
+    logUserOut() {
+
       this.$store.dispatch('logUserOut');
       this.$router.push('/');
     },

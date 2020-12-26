@@ -8,7 +8,7 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field prepend-icon="person" name="login" label="example@gmail.com"
+                  <v-text-field prepend-icon="email" name="login" label="example@gmail.com"
                   type="email" required v-model="email">
                   </v-text-field>
                   <v-text-field id="password" prepend-icon="lock" name="password"
@@ -36,7 +36,7 @@ export default {
       psw: '',
     };
   },
-   computed: {
+  computed: {
     user() {
       return this.$store.state.user;
     },
@@ -58,7 +58,7 @@ export default {
         // eslint-disable-next-line no-alert
         alert('Введите корректный email');
       } else {
-          this.$store.dispatch('signUserIn', {
+        this.$store.dispatch('signUserIn', {
           email: this.email,
           psw: this.psw,
         });

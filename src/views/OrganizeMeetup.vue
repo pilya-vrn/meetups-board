@@ -92,10 +92,12 @@ export default {
             title: this.title,
             location: this.location,
             description: this.description,
-            date: new Date(`${date}T${time}`).toISOString(),
+            date: new Date(`${this.date}T${this.time}`).toISOString(),
             photoFile: this.photoFile,
           });
+        this.$router.push('/');
       }
+
     },
   },
 };
@@ -113,5 +115,8 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+v-date-picker {
+  height: 392px;
 }
 </style>

@@ -8,6 +8,8 @@ import 'vuetify/dist/vuetify.min.css';
 
 Vue.config.productionTip = false;
 
+// export const bus = new Vue();
+
 new Vue({
   created() {
     firebase.initializeApp({
@@ -21,13 +23,14 @@ new Vue({
     });
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.$store.commit('setUser', { id: user.uid });
+        this.$store.commit('setUser', { id: user.uid, name: user.displayName, email: user.email });
+        this.$store.dispatch('loadUserData');
+        // this.$store.dispatch('loadMeetups');
         // this.$store.dispatch('loadLists');
-        // this.$store.dispatch('loadTasks');
-      } else {
-        this.$store.commit('resetStore');
       }
+        // this.$store.commit('resetStore');
     });
+    this.$store.dispatch('loadMeetups');
   },
   router,
   store,
