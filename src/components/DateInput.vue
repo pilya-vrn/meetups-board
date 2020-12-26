@@ -7,7 +7,7 @@
         max-width="290px"
         min-width="290px">
         <template v-slot:activator="{ on }">
-            <v-text-field v-on="on" :value="value" label="Date" readonly>
+            <v-text-field v-on="on" :value="value" label="Дата" readonly>
                 <v-btn slot="prepend-inner" icon v-on="on">
                     <v-icon>mdi-calendar</v-icon>
                 </v-btn>
@@ -15,11 +15,12 @@
         </template>
         <v-date-picker
             :value="value"
+            :min="minDate"
             @input="
                 $emit('input', $event);
-                showMenu = false;
-            "
-            no-title/>
+                showMenu = false;"
+            no-title
+            locale="ru"/>
     </v-menu>
 </template>
 

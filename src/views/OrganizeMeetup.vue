@@ -17,7 +17,8 @@
       <h1 style="padding-top: 30px;">Выберете дату и время</h1>
       <v-row>
         <v-col cols="12" sm="6">
-          <DateInput v-model="date" />
+          <DateInput v-model="date"
+          :minDate="minDate"/>
         </v-col>
         <v-col cols="12" sm="6">
           <TimeInput v-model="time" />
@@ -58,14 +59,16 @@
     data() {
       const todayDate = new Date();
       todayDate.setDate(todayDate.getDate() + 1);
+      const minDate = todayDate.toISOString().substr(0, 10);
       return {
-        date: todayDate.toISOString().substr(0, 10),
+        date: minDate,
         time: '09:00',
         title: '',
         location: '',
         description: '',
         imgSrc: '',
         photoFile: null,
+        minDate: minDate,
       }
     },
     methods: {

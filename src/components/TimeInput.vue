@@ -7,7 +7,7 @@
         max-width="290px"
         min-width="290px">
         <template v-slot:activator="{ on }">
-            <v-text-field v-on="on" :value="value" label="Date" readonly>
+            <v-text-field v-on="on" :value="value" label="Время" readonly>
                 <v-btn slot="prepend-inner" icon v-on="on">
                     <v-icon>mdi-calendar</v-icon>
                 </v-btn>
