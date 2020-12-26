@@ -183,7 +183,6 @@ export default new Vuex.Store({
         createdBy: userId,
       };
       const data = await firebase.database().ref('meetups').push(meetup);
-
       const filename = payload.photoFile.name;
       const ext = filename.slice(filename.lastIndexOf('.'));
       const fileData = await firebase
